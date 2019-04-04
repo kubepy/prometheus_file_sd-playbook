@@ -1,0 +1,3 @@
+{% for host in groups['vmhost'] %}
+- {targets: ["{{ host }}:9100"], labels: {"env": "{{ vcenter_hostname }}", "alias": "{{ hostvars[host].vm_name }}", "guest_fullname": "{{ hostvars[host].guest_fullname }}", "clustername": "{{ hostvars[host].clustername }}", "esxi_hostname": "{{ hostvars[host].esxi_hostname }}" }}
+{% endfor %}

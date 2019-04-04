@@ -1,0 +1,7 @@
+[local]
+localhost ansible_connection=local
+
+[local:vars]
+vcenter_hostname=vcenter.example.com
+vcenter_username=username@vsphere.local
+vcenter_password=password

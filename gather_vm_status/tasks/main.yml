@@ -1,0 +1,26 @@
+---
+# tasks file for gather_vm_status
+
+- name: Gather all registered virtual machines
+  vmware_vm_facts:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    vm_type: vm
+    validate_certs: no
+  delegate_to: localhost
+  register: vmfacts_temp
+
+- name: Save as vmfacts variable from vmfacts_temp
+  set_fact: vmfacts={{ vmfacts_temp["virtual_machines"] }}
+
+- name: Add vmfacts variable to vmhost group
+  add_host:
+    name: "{{ item.value.ip_address }}"
+    group: vmhost
+    vm_name: "{{ item.key }}"
+    guest_fullname: "{{ item.value.guest_fullname }}"
+    clustername: "{{ item.value.cluster }}"
+    esxi_hostname: "{{ item.value.esxi_hostname }}"
+  when: "item.value.power_state=='poweredOn' and item.value.ip_address != ''"
+  with_dict: "{{ vmfacts }}"
