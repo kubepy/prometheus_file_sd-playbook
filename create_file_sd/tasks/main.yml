@@ -4,7 +4,5 @@
 - name: Generate the file_sd_configs for prometheus
   template:
     src: sd_file_configs.yml.j2
-    dest: /etc/prometheus/custom_sd/file_sd_configs.yml
-    owner: prometheus
-    group: prometheus
+    dest: /etc/prometheus/node_exporter.yml
     mode: u=rw,g=r,o=r
