@@ -22,5 +22,5 @@
     guest_fullname: "{{ item.value.guest_fullname }}"
     clustername: "{{ item.value.cluster }}"
     esxi_hostname: "{{ item.value.esxi_hostname }}"
-  when: "item.value.power_state=='poweredOn' and item.value.ip_address != ''"
+  when: "item.value.power_state=='poweredOn' and item.value.ip_address != '' and 'Red Hat Enterprise Linux 7' in item.value.guest_fullname"
   with_dict: "{{ vmfacts }}"
