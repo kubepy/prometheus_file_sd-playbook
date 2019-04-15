@@ -5,3 +5,4 @@
   roles:
     - gather_vm_status
     - create_file_sd
+    - rename_ansible_log

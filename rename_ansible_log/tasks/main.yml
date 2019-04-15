@@ -1,0 +1,13 @@
+---
+# tasks file for rename_ansible_log
+
+- name: Ensure the ansible-log folder has been create
+  local_action:
+    module: file
+    path: ~/ansible-log/
+    state: directory
+
+- name: Rename ~/ansible.log to ~/ansible-log/ folder
+  local_action: command mv ~/ansible.log ~/ansible-log/ansible.{{ lookup('pipe', 'date +%Y-%m-%d-%H:%M:%S') }}.log
+  run_once: true
+  ignore_errors: true
