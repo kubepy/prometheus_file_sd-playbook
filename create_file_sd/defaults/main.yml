@@ -1,2 +1,6 @@
 ---
 # defaults file for create_file_sd
+output_file: "{{ vcenter_hostname }}.yml"
+vcenter_hostname: vcenter.example.com
+vcenter_username: username@vsphere.local
+vcenter_password: password

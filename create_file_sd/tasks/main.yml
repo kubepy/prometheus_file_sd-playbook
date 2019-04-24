@@ -4,5 +4,5 @@
 - name: Generate the file_sd_configs for prometheus
   template:
     src: sd_file_configs.yml.j2
-    dest: /etc/prometheus/node_exporter.yml
+    dest: "{{ output_file }}"
     mode: u=rw,g=r,o=r
