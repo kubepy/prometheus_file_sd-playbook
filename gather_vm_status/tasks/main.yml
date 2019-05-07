@@ -14,7 +14,7 @@
 - name: Save as vmfacts variable from vmfacts_temp
   set_fact: vmfacts={{ vmfacts_temp["virtual_machines"] }}
 
-- name: Add vmfacts variable to vmhost group
+- name: Add vmfacts variable to vmhost group(RHEL)
   add_host:
     name: "{{ item.value.ip_address }}"
     group: vmhost
@@ -23,4 +23,15 @@
     clustername: "{{ item.value.cluster }}"
     esxi_hostname: "{{ item.value.esxi_hostname }}"
   when: "item.value.power_state=='poweredOn' and item.value.ip_address != '' and 'Red Hat Enterprise Linux 7' in item.value.guest_fullname"
+  with_dict: "{{ vmfacts }}"
+
+- name: Add vmfacts variable to vmhost group(SLES)
+  add_host:
+    name: "{{ item.value.ip_address }}"
+    group: vmhost
+    vm_name: "{{ item.key }}"
+    guest_fullname: "{{ item.value.guest_fullname }}"
+    clustername: "{{ item.value.cluster }}"
+    esxi_hostname: "{{ item.value.esxi_hostname }}"
+  when: "item.value.power_state=='poweredOn' and item.value.ip_address != '' and 'SUSE Linux Enterprise 12' in item.value.guest_fullname"
   with_dict: "{{ vmfacts }}"
